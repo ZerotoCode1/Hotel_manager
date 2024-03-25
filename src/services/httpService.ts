@@ -1,8 +1,6 @@
+import { LOCAL_STORAGE_KEYS } from "@/consts/localStorageKeys";
 import { UserInfo } from "@/interfaces/user";
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
-
-export const TOKEN_KEY = "token";
-export const USER_KEY = "user";
 
 class Services {
   axios: AxiosInstance;
@@ -81,26 +79,26 @@ class Services {
   }
 
   saveTokenStorage(token: string) {
-    localStorage.setItem(TOKEN_KEY, token);
+    localStorage.setItem(LOCAL_STORAGE_KEYS.TOKEN, token);
   }
 
   getTokenStorage() {
-    const token = localStorage.getItem(TOKEN_KEY);
+    const token = localStorage.getItem(LOCAL_STORAGE_KEYS.TOKEN);
     return token || "";
   }
 
   clearStorage() {
-    localStorage.removeItem(TOKEN_KEY);
-    localStorage.removeItem(USER_KEY);
+    localStorage.removeItem(LOCAL_STORAGE_KEYS.TOKEN);
+    localStorage.removeItem(LOCAL_STORAGE_KEYS.USER);
   }
 
   saveUserStorage(user: UserInfo) {
-    localStorage.setItem(USER_KEY, JSON.stringify(user));
+    localStorage.setItem(LOCAL_STORAGE_KEYS.USER, JSON.stringify(user));
   }
 
   getUserStorage() {
-    if (localStorage.getItem(USER_KEY)) {
-      return JSON.parse(localStorage?.getItem(USER_KEY) || "") as UserInfo;
+    if (localStorage.getItem(LOCAL_STORAGE_KEYS.USER)) {
+      return JSON.parse(localStorage?.getItem(LOCAL_STORAGE_KEYS.USER) || "") as UserInfo;
     }
 
     return null;

@@ -7,7 +7,11 @@ interface Props extends ButtonProps {
 
 const Button = (props: Props) => {
   const { children, ...params } = props;
-  return <ButtonMui {...params}>{children}</ButtonMui>;
+  return (
+    <ButtonMui {...params} sx={{ fontWeight: 600 }}>
+      {children}
+    </ButtonMui>
+  );
 };
 
 export default Button;

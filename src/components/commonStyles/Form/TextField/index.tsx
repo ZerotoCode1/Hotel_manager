@@ -79,6 +79,7 @@ const InputField = (props: Props) => {
   const typePassword = useMemo(() => {
     return showPassword ? "text" : "password";
   }, [showPassword]);
+  console.log(typePassword, "typePassword");
 
   const handleMouseDown = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();

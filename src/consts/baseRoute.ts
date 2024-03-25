@@ -1,4 +1,4 @@
-const BaseUrl = {
+const BaseRoute = {
   // ImportBaseURL
   Homepage: "/",
   Todos: "/todos",
@@ -15,4 +15,4 @@ const BaseUrl = {
   Components: "/components",
 };
 
-export default BaseUrl;
+export default BaseRoute;

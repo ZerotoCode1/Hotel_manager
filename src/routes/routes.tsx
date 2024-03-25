@@ -1,7 +1,7 @@
 import React, { Fragment, lazy } from "react";
-import BaseUrl from "../consts/baseUrl";
 import withCheckRole from "../HOCs/withCheckRole";
 import { PERMISSION_ENUM } from "../consts/common";
+import BaseRoute from "@/consts/baseRoute";
 
 // Bash importHere
 const DefaultLayout = lazy(() => import("../layouts/DefaultLayout"));
@@ -13,10 +13,7 @@ interface Route {
   name: string;
   path: string;
   isPrivateRoute?: boolean;
-  layout:
-    | React.LazyExoticComponent<React.MemoExoticComponent<any>>
-    | React.ExoticComponent<any>
-    | typeof React.Component;
+  layout: React.LazyExoticComponent<React.MemoExoticComponent<any>> | React.ExoticComponent<any> | typeof React.Component;
   routeChild: {
     name: string;
     path: string;
@@ -28,12 +25,12 @@ interface Route {
 const routes: Route[] = [
   {
     name: "Login Layout",
-    path: BaseUrl.Login,
+    path: BaseRoute.Login,
     layout: Fragment,
     routeChild: [
       {
         name: "Login",
-        path: BaseUrl.Login,
+        path: BaseRoute.Login,
         component: Login,
       },
     ],
@@ -41,19 +38,19 @@ const routes: Route[] = [
 
   {
     name: "Home Layout",
-    path: BaseUrl.Homepage,
+    path: BaseRoute.Homepage,
     layout: DefaultLayout,
     isPrivateRoute: true,
     routeChild: [
       // Bash appendHere
       {
         name: "Homepage",
-        path: BaseUrl.Homepage,
+        path: BaseRoute.Homepage,
         component: withCheckRole(Homepage, [PERMISSION_ENUM.PUBLIC]),
       },
       {
         name: "Components",
-        path: BaseUrl.Components,
+        path: BaseRoute.Components,
         component: withCheckRole(Components, [PERMISSION_ENUM.PUBLIC]),
       },
     ],

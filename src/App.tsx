@@ -1,11 +1,6 @@
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import {
-  BrowserRouter as Router,
-  Outlet,
-  Route,
-  Routes,
-} from "react-router-dom";
+import { BrowserRouter as Router, Outlet, Route, Routes } from "react-router-dom";
 import { I18nextProvider } from "react-i18next";
 import i18n from "./i18n/config";
 import Page404 from "./pages/Page404";
@@ -15,6 +10,7 @@ import routes from "./routes/routes";
 import PrivateRoute from "./components/PrivateRoute";
 import { CssBaseline, GlobalStyles, ThemeProvider } from "@mui/material";
 import { theme } from "./theme";
+import "react-toastify/dist/ReactToastify.css";
 
 const ErrorFallback = ({ error, resetErrorBoundary }: any) => {
   return (
@@ -29,73 +25,75 @@ const ErrorFallback = ({ error, resetErrorBoundary }: any) => {
 const App = () => {
   const renderContent = () => {
     return (
-      <Router>
-        <Routes>
-          {routes.map((route) => {
-            return (
-              <Route
-                key={`${route.path}-layout`}
-                path={route.path}
-                element={
-                  route.isPrivateRoute ? (
-                    <PrivateRoute>
+      <>
+        <Router>
+          <ToastContainer
+            position="top-right"
+            autoClose={2000}
+            hideProgressBar={true}
+            newestOnTop
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            transition={Slide}
+          />
+          <Routes>
+            {routes.map((route) => {
+              return (
+                <Route
+                  key={`${route.path}-layout`}
+                  path={route.path}
+                  element={
+                    route.isPrivateRoute ? (
+                      <PrivateRoute>
+                        <route.layout>
+                          <Outlet />
+                        </route.layout>
+                      </PrivateRoute>
+                    ) : (
                       <route.layout>
                         <Outlet />
                       </route.layout>
-                    </PrivateRoute>
-                  ) : (
-                    <route.layout>
-                      <Outlet />
-                    </route.layout>
-                  )
-                }
-              >
-                {route.routeChild.map((child, idx) => {
-                  return (
-                    <Route
-                      key={`${child.path}-${idx}`}
-                      path={child.path}
-                      element={
-                        <Suspense fallback={<span>Loading...</span>}>
-                          <ErrorBoundary FallbackComponent={ErrorFallback}>
-                            {child.isPrivateRoute ? (
-                              <PrivateRoute>
+                    )
+                  }
+                >
+                  {route.routeChild.map((child, idx) => {
+                    return (
+                      <Route
+                        key={`${child.path}-${idx}`}
+                        path={child.path}
+                        element={
+                          <Suspense fallback={<span>Loading...</span>}>
+                            <ErrorBoundary FallbackComponent={ErrorFallback}>
+                              {child.isPrivateRoute ? (
+                                <PrivateRoute>
+                                  <child.component />
+                                </PrivateRoute>
+                              ) : (
                                 <child.component />
-                              </PrivateRoute>
-                            ) : (
-                              <child.component />
-                            )}
-                          </ErrorBoundary>
-                        </Suspense>
-                      }
-                    />
-                  );
-                })}
-              </Route>
-            );
-          })}
+                              )}
+                            </ErrorBoundary>
+                          </Suspense>
+                        }
+                      />
+                    );
+                  })}
+                </Route>
+              );
+            })}
 
-          <Route path="*" element={<Page404 />} />
-        </Routes>
-      </Router>
+            <Route path="*" element={<Page404 />} />
+          </Routes>
+        </Router>
+      </>
     );
   };
 
   return (
     <I18nextProvider i18n={i18n}>
       <AuthenticationProvider>
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={true}
-          newestOnTop
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          transition={Slide}
-        />
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <GlobalStyles
