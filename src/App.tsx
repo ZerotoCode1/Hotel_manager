@@ -9,11 +9,12 @@ import {
 import { I18nextProvider } from "react-i18next";
 import i18n from "./i18n/config";
 import Page404 from "./pages/Page404";
-import { ThemeProvider } from "./providers/ThemeProvider";
 import AuthenticationProvider from "./providers/AuthenticationProvider";
 import { Slide, ToastContainer } from "react-toastify";
 import routes from "./routes/routes";
 import PrivateRoute from "./components/PrivateRoute";
+import { CssBaseline, GlobalStyles, ThemeProvider } from "@mui/material";
+import { theme } from "./theme";
 
 const ErrorFallback = ({ error, resetErrorBoundary }: any) => {
   return (
@@ -82,23 +83,31 @@ const App = () => {
 
   return (
     <I18nextProvider i18n={i18n}>
-      <ThemeProvider defaultTheme="light" storageKey="theme">
-        <AuthenticationProvider>
-          <ToastContainer
-            position="top-right"
-            autoClose={5000}
-            hideProgressBar={true}
-            newestOnTop
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            transition={Slide}
+      <AuthenticationProvider>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={true}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          transition={Slide}
+        />
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <GlobalStyles
+            styles={{
+              p: {
+                margin: 0,
+              },
+            }}
           />
           {renderContent()}
-        </AuthenticationProvider>
-      </ThemeProvider>
+        </ThemeProvider>
+      </AuthenticationProvider>
     </I18nextProvider>
   );
 };

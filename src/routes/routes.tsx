@@ -7,6 +7,7 @@ import { PERMISSION_ENUM } from "../consts/common";
 const DefaultLayout = lazy(() => import("../layouts/DefaultLayout"));
 const Login = lazy(() => import("../pages/Login"));
 const Homepage = lazy(() => import("../pages/Homepage"));
+const Components = lazy(() => import("../pages/Components"));
 
 interface Route {
   name: string;
@@ -49,6 +50,11 @@ const routes: Route[] = [
         name: "Homepage",
         path: BaseUrl.Homepage,
         component: withCheckRole(Homepage, [PERMISSION_ENUM.PUBLIC]),
+      },
+      {
+        name: "Components",
+        path: BaseUrl.Components,
+        component: withCheckRole(Components, [PERMISSION_ENUM.PUBLIC]),
       },
     ],
   },

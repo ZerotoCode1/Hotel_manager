@@ -12,6 +12,7 @@ const BaseUrl = {
   Users: "/users",
   Settings: "/settings",
   AppConnect: "/app-connect",
+  Components: "/components",
 };
 
 export default BaseUrl;

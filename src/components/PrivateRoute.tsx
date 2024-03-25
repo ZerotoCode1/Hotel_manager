@@ -7,8 +7,11 @@ const PrivateRoute = (props: { children: any }) => {
 
   console.log({ auth });
 
+  const checkLoginFake = !auth.isLogged;
+  // console.log(checkLoginFake, "checkLoginFake");
+
   //! Render
-  if (auth.isLogged) {
+  if (checkLoginFake) {
     return props.children;
   }
 
