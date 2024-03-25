@@ -4,6 +4,7 @@ import { CommonStyles } from "@/components/commonStyles";
 import Form from "./Children/Form";
 import { Box } from "@mui/material";
 import { TabsComponent } from "@/interfaces/enum";
+import Common from "./Children/Common";
 
 // const useStyles = makeStyles(() => {
 //   return {
@@ -17,16 +18,12 @@ const Components = () => {
   const [activeTab, setActiveTab] = useState<TabsComponent>(TabsComponent.form);
 
   const renderActiveTab = () => {
-    const tabs = { form: <Form />, common: <></> };
+    const tabs = { form: <Form />, common: <Common /> };
     return tabs[activeTab];
   };
   return (
     <Container>
-      <CommonStyles.CommonTabs
-        listTabs={tabsComponent}
-        value={activeTab}
-        onChangeTab={(e, value) => setActiveTab(value)}
-      />
+      <CommonStyles.CommonTabs listTabs={tabsComponent} value={activeTab} onChangeTab={(e, value) => setActiveTab(value)} />
       <Box sx={{ marginTop: "32px" }}>{renderActiveTab()}</Box>
     </Container>
   );

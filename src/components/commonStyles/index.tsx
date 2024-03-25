@@ -5,7 +5,12 @@ import Label from "./Form/Label/Label";
 import RadioGroupField from "./Form/RadioGroup";
 import SelectField from "./Form/Select";
 import InputField from "./Form/TextField";
-import CommonTabs from "./Tabs/index";
+import CommonTabs from "./Tabs";
+import Text from "./Text";
+import Button from "./Button";
+import CicrularProgress from "./CicrularProgess";
+import Rating from "./Rating";
+import Accordion from "./Accordion";
 
 export const CommonStyles = {
   InputField,
@@ -16,4 +21,9 @@ export const CommonStyles = {
   Label,
   CheckboxField,
   RadioGroupField,
+  Text,
+  Button,
+  CicrularProgress,
+  Rating,
+  Accordion,
 };
