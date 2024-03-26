@@ -1,45 +1,43 @@
-import i18next from "i18next";
 import { initReactI18next } from "react-i18next";
-// import Backend from "i18next-http-backend";
-// import LanguageDetector from "i18next-browser-languagedetector";
-
-import sharedEn from "./en/shared.json";
-import sharedVi from "./vi/shared.json";
+import i18n from "i18next";
+import { LOCAL_STORAGE_KEYS } from "@/consts/localStorageKeys";
+import { translateTextVn } from "./vi/shared";
+import { translateTextEn } from "./en/shared";
 
 export const LANG_ENUM = {
   vi: "vi",
   en: "en",
 };
 
-const KEY_LANG = "lang";
-const currentLng = localStorage.getItem(KEY_LANG) || LANG_ENUM.en;
+const currentLng = localStorage.getItem(LOCAL_STORAGE_KEYS.KEY_LANG) || LANG_ENUM.en;
 
 export const defaultNS = "shared";
 
-i18next
-  // load translation using http -> see /public/locales
-  // learn more: https://github.com/i18next/i18next-http-backend
-  // .use(Backend)
-  // detect user language
-  // learn more: https://github.com/i18next/i18next-browser-languageDetector
-  // .use(LanguageDetector)
-  // pass the i18n instance to react-i18next.
-  .use(initReactI18next)
-  // init i18next
-  // for all options read: https://www.i18next.com/overview/configuration-options
+i18n
+  .use(initReactI18next) // passes i18n down to react-i18next
   .init({
-    lng: currentLng,
-    fallbackLng: LANG_ENUM.en,
-    debug: true,
+    // the translations
+    // (tip move them in a JSON file and import them,
+    // or even better, manage them via a UI: https://react.i18next.com/guides/multiple-translation-files#manage-your-translations-with-a-management-gui)
     resources: {
       en: {
-        shared: sharedEn,
+        translation: {
+          test: "test",
+          ...translateTextEn,
+        },
       },
-      vi: {
-        shared: sharedVi,
+      vn: {
+        translation: {
+          test: "kiem tra",
+          ...translateTextVn,
+        },
       },
     },
-    defaultNS,
-  });
+    lng: currentLng, // if you're using a language detector, do not define the lng option
+    fallbackLng: "en",
 
-export default i18next;
+    interpolation: {
+      escapeValue: false, // react already safes from xss => https://www.i18next.com/translation-function/interpolation#unescape
+    },
+  });
+export default i18n;
