@@ -29,3 +29,10 @@ export const NUMBER_DEFAULT_PAGE = 0;
 export const classCommon = {
   header: "header",
 };
+
+export const indexElement = {
+  loading: 101,
+  popup: 102,
+  header: 100,
+  overlay: 100,
+};

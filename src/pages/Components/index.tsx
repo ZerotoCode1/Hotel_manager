@@ -1,24 +1,55 @@
-import Container from "@/components/commonStyles/Container/Container";
-import { useState } from "react";
 import { CommonStyles } from "@/components/commonStyles";
-import Form from "./Children/Form";
+import Container from "@/components/commonStyles/Container/Container";
 import { Box } from "@mui/material";
-import { TabsComponent } from "@/interfaces/enum";
+import { isString } from "lodash";
+import queryString from "query-string";
+import { useEffect, useMemo } from "react";
 import Common from "./Children/Common";
-import Table from "./Children/Table";
+import Form from "./Children/Form";
 import PaginationDemo from "./Children/Pagination";
+import Table from "./Children/Table";
+import { useNavigate } from "react-router-dom";
+import PopupService from "@/services/popupPage";
+
+type Tab = "form" | "common" | "table" | "pagination";
 
 const Components = () => {
-  const [activeTab, setActiveTab] = useState<TabsComponent>(TabsComponent.form);
+  const history = useNavigate();
+  useEffect(() => {
+    if (!window.location.search) {
+      const pathName = window.location.pathname;
+      history(pathName + `?tab=form`);
+    }
+    PopupService.instance.current.open({ visible: true, content: "fdsfsdf" });
+  }, []);
 
-  const renderActiveTab = () => {
+  const renderActiveTab = (tab: Tab) => {
     const tabs = { form: <Form />, common: <Common />, table: <Table />, pagination: <PaginationDemo /> };
-    return tabs[activeTab];
+    return tabs[tab];
   };
+
+  const pathQuery = window.location.search;
+
+  const tab: Tab | any = useMemo(() => {
+    const searchs = queryString.parse(pathQuery);
+    const searchTab = searchs.tab;
+
+    if (isString(searchTab)) {
+      return searchTab;
+    }
+
+    return tabsComponent[0].value;
+  }, [pathQuery]);
+
+  const onChangeTab = (event: any, tab: Tab) => {
+    const pathName = window.location.pathname;
+    history(pathName + `?tab=${tab}`);
+  };
+
   return (
     <Container>
-      <CommonStyles.CommonTabs listTabs={tabsComponent} value={activeTab} onChangeTab={(e, value) => setActiveTab(value)} />
-      <Box sx={{ marginTop: "32px" }}>{renderActiveTab()}</Box>
+      <CommonStyles.CommonTabs listTabs={tabsComponent} value={tab} onChangeTab={onChangeTab} />
+      <Box sx={{ marginTop: "32px" }}>{renderActiveTab(tab)}</Box>
     </Container>
   );
 };

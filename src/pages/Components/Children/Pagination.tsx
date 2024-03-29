@@ -6,7 +6,6 @@ import useFiltersHandler from "@/hooks/useFilters";
 const PaginationDemo = () => {
   const { filters, handleChangePage } = useFiltersHandler({ page: 1, page_size: 10 });
   const { data } = useGetListCats(filters, { refetchKey: cachedKeys.listCats });
-  console.log(data, "data");
 
   return (
     <div>
@@ -14,7 +13,7 @@ const PaginationDemo = () => {
         {data?.map((item) => {
           return (
             <div className="">
-              <img src={item.url} alt="" style={{}} />
+              <CommonStyles.Image src={item.url} width={item.width} height={item.height} data={data} />
             </div>
           );
         })}

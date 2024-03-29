@@ -4,6 +4,7 @@ import { isEmpty } from "lodash";
 import cloneDeep from "lodash/cloneDeep";
 import { useCallback, useEffect, useState } from "react";
 import CatsServices from "@/services/cats.services";
+import LoadingPageService from "@/services/loadingPage";
 
 // import { FilterListProductType, ProductTypeList, ResponseCats } from "interfaces/productType.interface";
 // import CatsServices from "services/ProductType.services";
@@ -37,6 +38,7 @@ const useGetListCats = (filters?: FiltterCats, options: { isTrigger?: boolean; r
     return new Promise((resolve, reject) => {
       (async () => {
         try {
+          LoadingPageService.instance.current?.open();
           let nextFilters = undefined;
           if (filters) {
             nextFilters = parseRequest(filters);
@@ -47,6 +49,8 @@ const useGetListCats = (filters?: FiltterCats, options: { isTrigger?: boolean; r
           setError(error);
           reject(error);
           setFetchingPage(false);
+        } finally {
+          LoadingPageService.instance.current.close();
         }
       })();
     });
@@ -100,13 +104,16 @@ const useGetListCats = (filters?: FiltterCats, options: { isTrigger?: boolean; r
     async (shouldSetData: boolean) => {
       try {
         setLoading(true);
+        LoadingPageService.instance.current?.open();
         const response = await fetch();
         if (shouldSetData && response) {
           checkConditionPass(response);
         }
         setLoading(false);
+        LoadingPageService.instance.current.close();
       } catch (error) {
         setError(error);
+        LoadingPageService.instance.current.close();
         setLoading(false);
       }
     },

@@ -1,3 +1,4 @@
+import { indexElement } from "@/consts/common";
 import { Theme, createTheme } from "@mui/material/styles";
 
 export const HEIGHT_HEADER = 93;
@@ -32,6 +33,7 @@ declare module "@mui/material/styles" {
       text: {
         blue: string;
       };
+      overlay: any;
     };
   }
   interface ThemeOptions {
@@ -67,6 +69,20 @@ export const theme = createTheme({
       error: "red",
       active: "#2196F3",
       default: "#ccc",
+    },
+    overlay: {
+      zIndex: `${indexElement.overlay}`,
+      height: "100vh",
+      width: "100vw",
+      background: "rgba(0, 0, 0, 0.4)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      position: "fixed",
+      top: 0,
+      right: 0,
+      left: 0,
+      bottom: 0,
     },
   },
   components: {

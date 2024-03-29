@@ -11,6 +11,11 @@ import PrivateRoute from "./components/PrivateRoute";
 import { CssBaseline, GlobalStyles, ThemeProvider } from "@mui/material";
 import { theme } from "./theme";
 import "react-toastify/dist/ReactToastify.css";
+import LoadingPageGlobal, { GlobalLoadingPage } from "./components/Global/Loading";
+import LoadingPageService from "./services/loadingPage";
+import React from "react";
+import PopupService from "./services/popupPage";
+import GlobalPopupConfirm, { GlobalPopupConfirmRef } from "./components/Global/Popup";
 
 const ErrorFallback = ({ error, resetErrorBoundary }: any) => {
   return (
@@ -23,6 +28,9 @@ const ErrorFallback = ({ error, resetErrorBoundary }: any) => {
 };
 
 const App = () => {
+  LoadingPageService.instance = React.useRef<GlobalLoadingPage | any>(null);
+  PopupService.instance = React.useRef<GlobalPopupConfirmRef | any>(null);
+
   const renderContent = () => {
     return (
       <>
@@ -87,6 +95,8 @@ const App = () => {
             <Route path="*" element={<Page404 />} />
           </Routes>
         </Router>
+        <LoadingPageGlobal ref={LoadingPageService.instance} />
+        <GlobalPopupConfirm ref={PopupService.instance} />
       </>
     );
   };
