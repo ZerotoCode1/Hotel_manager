@@ -5,20 +5,14 @@ import Form from "./Children/Form";
 import { Box } from "@mui/material";
 import { TabsComponent } from "@/interfaces/enum";
 import Common from "./Children/Common";
-
-// const useStyles = makeStyles(() => {
-//   return {
-//     boxField: {
-//       marginBottom: "12px",
-//     },
-//   };
-// });
+import Table from "./Children/Table";
+import PaginationDemo from "./Children/Pagination";
 
 const Components = () => {
   const [activeTab, setActiveTab] = useState<TabsComponent>(TabsComponent.form);
 
   const renderActiveTab = () => {
-    const tabs = { form: <Form />, common: <Common /> };
+    const tabs = { form: <Form />, common: <Common />, table: <Table />, pagination: <PaginationDemo /> };
     return tabs[activeTab];
   };
   return (
@@ -34,4 +28,6 @@ export default Components;
 const tabsComponent = [
   { label: "Form", value: "form" },
   { label: "Common", value: "common" },
+  { label: "Table", value: "table" },
+  { label: "Pagination", value: "pagination" },
 ];

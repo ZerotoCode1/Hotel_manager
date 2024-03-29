@@ -11,6 +11,7 @@ import Button from "./Button";
 import CicrularProgress from "./CicrularProgess";
 import Rating from "./Rating";
 import Accordion from "./Accordion";
+import Pagination from "./Pagination";
 
 export const CommonStyles = {
   InputField,
@@ -26,4 +27,5 @@ export const CommonStyles = {
   CicrularProgress,
   Rating,
   Accordion,
+  Pagination,
 };
