@@ -4,12 +4,11 @@ import { Box } from "@mui/material";
 import { isString } from "lodash";
 import queryString from "query-string";
 import { useEffect, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import Common from "./Children/Common";
 import Form from "./Children/Form";
 import PaginationDemo from "./Children/Pagination";
 import Table from "./Children/Table";
-import { useNavigate } from "react-router-dom";
-import PopupService from "@/services/popupPage";
 
 type Tab = "form" | "common" | "table" | "pagination";
 
@@ -20,7 +19,6 @@ const Components = () => {
       const pathName = window.location.pathname;
       history(pathName + `?tab=form`);
     }
-    PopupService.instance.current.open({ visible: true, content: "fdsfsdf" });
   }, []);
 
   const renderActiveTab = (tab: Tab) => {

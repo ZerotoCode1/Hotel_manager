@@ -13,6 +13,7 @@ import Rating from "./Rating";
 import Accordion from "./Accordion";
 import Pagination from "./Pagination";
 import Image from "./Image";
+import DataGrid from "./DataGrid";
 
 export const CommonStyles = {
   InputField,
@@ -30,4 +31,5 @@ export const CommonStyles = {
   Accordion,
   Pagination,
   Image,
+  DataGrid,
 };
